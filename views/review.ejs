@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Книжный клуб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/">
+                    <i class="fas fa-book"></i>
+                    Книжный клуб
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/books" class="nav-link">Каталог</a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="nav-link">Мой профиль</a>
+                    <div class="user-menu">
+                        <img src="<%= user.photo %>" alt="<%= user.username %>" class="user-avatar">
+                        <span class="user-name"><%= user.username %></span>
+                        <a href="/logout" class="nav-link logout">Выйти</a>
+                    </div>
+                <% } else { %>
+                    <a href="/login" class="nav-link login-btn">Войти через ВК</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="review-container">
+            <div class="review-card">
+                <div class="review-header">
+                    <h1><i class="fas fa-star"></i> Отзыв о книге</h1>
+                    <div class="book-info">
+                        <h2>"<%= book.title %>"</h2>
+                        <p class="book-author">Автор: <%= book.author %></p>
+                    </div>
+                </div>
+
+                <form method="POST" action="/books/<%= book.id %>/review" class="review-form">
+                    <div class="form-group">
+                        <label for="rating">Ваша оценка:</label>
+                        <div class="rating-input">
+                            <% for(let i = 1; i <= 5; i++) { %>
+                                <input type="radio" id="star<%= i %>" name="rating" value="<%= i %>" 
+                                       <%= existingReview && existingReview.rating === i ? 'checked' : '' %>>
+                                <label for="star<%= i %>" class="star-label">
+                                    <i class="fas fa-star"></i>
+                                </label>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="review">Ваш отзыв:</label>
+                        <textarea id="review" name="review" rows="6" required 
+                                  placeholder="Поделитесь своими впечатлениями о книге..."><%= existingReview ? existingReview.review : '' %></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="/dashboard" class="btn btn-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Сохранить отзыв
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Книжный клуб. Курсовой проект по интеграции с социальными сетями.</p>
+            <p>Разработано с использованием Node.js, Express и VK API</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

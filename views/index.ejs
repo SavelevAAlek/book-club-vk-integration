@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Книжный клуб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/">
+                    <i class="fas fa-book"></i>
+                    Книжный клуб
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/books" class="nav-link">Каталог</a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="nav-link">Мой профиль</a>
+                    <div class="user-menu">
+                        <img src="<%= user.photo %>" alt="<%= user.username %>" class="user-avatar">
+                        <span class="user-name"><%= user.username %></span>
+                        <a href="/logout" class="nav-link logout">Выйти</a>
+                    </div>
+                <% } else { %>
+                    <a href="/login" class="nav-link login-btn">Войти через ВК</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Добро пожаловать в Книжный клуб</h1>
+        <p class="hero-subtitle">Отслеживайте прочитанные книги, делитесь отзывами и находите новые произведения</p>
+        
+        <% if (!user) { %>
+            <div class="hero-actions">
+                <a href="/login" class="btn btn-primary btn-large">
+                    <i class="fab fa-vk"></i>
+                    Войти через ВКонтакте
+                </a>
+                <a href="/books" class="btn btn-secondary btn-large">
+                    <i class="fas fa-book-open"></i>
+                    Посмотреть каталог
+                </a>
+            </div>
+        <% } else { %>
+            <div class="hero-actions">
+                <a href="/dashboard" class="btn btn-primary btn-large">
+                    <i class="fas fa-user"></i>
+                    Мой профиль
+                </a>
+                <a href="/books" class="btn btn-secondary btn-large">
+                    <i class="fas fa-plus"></i>
+                    Добавить книгу
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <h2 class="section-title">Возможности платформы</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Каталог книг</h3>
+                <p>Обширная база книг различных жанров и авторов</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Отзывы и рейтинги</h3>
+                <p>Оставляйте отзывы и оценивайте прочитанные книги</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fab fa-vk"></i>
+                </div>
+                <h3>Интеграция с ВК</h3>
+                <p>Делитесь своими впечатлениями в социальных сетях</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-list"></i>
+                </div>
+                <h3>Личная библиотека</h3>
+                <p>Ведите список прочитанных книг и отслеживайте прогресс</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% if (user) { %>
+<div class="recent-section">
+    <div class="container">
+        <h2 class="section-title">Добро пожаловать, <%= user.username %>!</h2>
+        <p>Теперь вы можете добавлять книги в свою библиотеку и делиться отзывами с друзьями.</p>
+    </div>
+</div>
+<% } %>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Книжный клуб. Курсовой проект по интеграции с социальными сетями.</p>
+            <p>Разработано с использованием Node.js, Express и VK API</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

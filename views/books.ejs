@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Книжный клуб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/">
+                    <i class="fas fa-book"></i>
+                    Книжный клуб
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/books" class="nav-link">Каталог</a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="nav-link">Мой профиль</a>
+                    <div class="user-menu">
+                        <img src="<%= user.photo %>" alt="<%= user.username %>" class="user-avatar">
+                        <span class="user-name"><%= user.username %></span>
+                        <a href="/logout" class="nav-link logout">Выйти</a>
+                    </div>
+                <% } else { %>
+                    <a href="/login" class="nav-link login-btn">Войти через ВК</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="books-container">
+            <div class="books-header">
+                <h1><i class="fas fa-book"></i> Каталог книг</h1>
+                <p>Выберите книги, которые вы прочитали</p>
+            </div>
+
+            <div class="books-grid">
+                <% books.forEach(book => { %>
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-info">
+                            <h3><%= book.title %></h3>
+                            <p class="book-author"><%= book.author %></p>
+                            <p class="book-genre"><%= book.genre %></p>
+                            <p class="book-year"><%= book.year %></p>
+                            <p class="book-description"><%= book.description %></p>
+                        </div>
+                        <div class="book-actions">
+                            <% if (user) { %>
+                                <form method="POST" action="/books/<%= book.id %>/add" style="display: inline;">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i>
+                                        Добавить в прочитанные
+                                    </button>
+                                </form>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Войти для добавления
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Книжный клуб. Курсовой проект по интеграции с социальными сетями.</p>
+            <p>Разработано с использованием Node.js, Express и VK API</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

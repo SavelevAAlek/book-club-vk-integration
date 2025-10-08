@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= error %> - Книжный клуб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/">
+                    <i class="fas fa-book"></i>
+                    Книжный клуб
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/books" class="nav-link">Каталог</a>
+                <a href="/login" class="nav-link login-btn">Войти через ВК</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="error-container">
+            <div class="error-content">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h1><%= error %></h1>
+                <p><%= message %></p>
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home"></i>
+                    Вернуться на главную
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Книжный клуб. Курсовой проект по интеграции с социальными сетями.</p>
+            <p>Разработано с использованием Node.js, Express и VK API</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

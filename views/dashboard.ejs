@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Книжный клуб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/">
+                    <i class="fas fa-book"></i>
+                    Книжный клуб
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/books" class="nav-link">Каталог</a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="nav-link">Мой профиль</a>
+                    <div class="user-menu">
+                        <img src="<%= user.photo %>" alt="<%= user.username %>" class="user-avatar">
+                        <span class="user-name"><%= user.username %></span>
+                        <a href="/logout" class="nav-link logout">Выйти</a>
+                    </div>
+                <% } else { %>
+                    <a href="/login" class="nav-link login-btn">Войти через ВК</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <div class="user-info">
+                    <img src="<%= user.photo %>" alt="<%= user.username %>" class="user-avatar-large">
+                    <div class="user-details">
+                        <h1>Привет, <%= user.username %>!</h1>
+                        <p>Добро пожаловать в ваш личный кабинет</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= books.length %></h3>
+                            <p>Прочитанных книг</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= Object.keys(reviews).length %></h3>
+                            <p>Написанных отзывов</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-sections">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-book-open"></i> Мои книги</h2>
+                            <a href="/books" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Добавить книгу
+                            </a>
+                        </div>
+                        
+                        <% if (books.length > 0) { %>
+                            <div class="books-grid">
+                                <% books.forEach(book => { %>
+                                    <div class="book-card">
+                                        <div class="book-info">
+                                            <h3><%= book.title %></h3>
+                                            <p class="book-author"><%= book.author %></p>
+                                            <p class="book-genre"><%= book.genre %></p>
+                                        </div>
+                                        <div class="book-actions">
+                                            <a href="/books/<%= book.id %>/review" class="btn btn-sm">
+                                                <i class="fas fa-star"></i>
+                                                Отзыв
+                                            </a>
+                                            <button class="btn btn-sm share-btn" data-book-id="<%= book.id %>">
+                                                <i class="fab fa-vk"></i>
+                                                Поделиться
+                                            </button>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <i class="fas fa-book-open"></i>
+                                <h3>У вас пока нет прочитанных книг</h3>
+                                <p>Начните с добавления первой книги в каталоге</p>
+                                <a href="/books" class="btn btn-primary">Перейти к каталогу</a>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-star"></i> Мои отзывы</h2>
+                        </div>
+                        
+                        <% if (Object.keys(reviews).length > 0) { %>
+                            <div class="reviews-list">
+                                <% Object.keys(reviews).forEach(bookId => { %>
+                                    <% const review = reviews[bookId]; %>
+                                    <% const book = allBooks.find(b => b.id == bookId); %>
+                                    <% if (book) { %>
+                                        <div class="review-card">
+                                            <div class="review-header">
+                                                <h3><%= book.title %></h3>
+                                                <div class="rating">
+                                                    <% for(let i = 1; i <= 5; i++) { %>
+                                                        <i class="fas fa-star <%= i <= review.rating ? 'active' : '' %>"></i>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                            <p class="review-text"><%= review.review %></p>
+                                            <div class="review-actions">
+                                                <button class="btn btn-sm share-review-btn" data-book-id="<%= bookId %>">
+                                                    <i class="fab fa-vk"></i>
+                                                    Поделиться отзывом
+                                                </button>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            </div>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <i class="fas fa-star"></i>
+                                <h3>У вас пока нет отзывов</h3>
+                                <p>Оставьте свой первый отзыв о прочитанной книге</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для поделиться книгой -->
+        <div id="shareModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Поделиться книгой в ВКонтакте</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="shareForm">
+                        <div class="form-group">
+                            <label for="shareReview">Добавить комментарий (необязательно):</label>
+                            <textarea id="shareReview" name="review" rows="4" placeholder="Поделитесь своими впечатлениями о книге..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelShare">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Поделиться</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Книжный клуб. Курсовой проект по интеграции с социальными сетями.</p>
+            <p>Разработано с использованием Node.js, Express и VK API</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

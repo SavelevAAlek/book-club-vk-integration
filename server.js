@@ -31,12 +31,17 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware для передачи данных пользователя в шаблоны
 app.use((req, res, next) => {
-  console.log('Проверка сессии:', { 
-    hasSession: !!req.session, 
-    hasUser: !!req.session?.user,
-    userId: req.session?.user?.id 
-  });
-  res.locals.user = req.session.user;
+  const token = req.cookies.authToken;
+  
+  if (token) {
+    const { verifyToken } = require('./modules/auth');
+    const user = verifyToken(token);
+    if (user) {
+      req.user = user;
+      res.locals.user = user;
+    }
+  }
+  
   next();
 });
 
@@ -49,7 +54,7 @@ app.use('/', require('./routes/api'));
 app.get('/', (req, res) => {
   res.render('index', { 
     title: 'Книжный клуб',
-    user: req.session.user 
+    user: req.user 
   });
 });
 

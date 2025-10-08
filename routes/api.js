@@ -17,7 +17,7 @@ router.post('/api/share/book/:id', isAuthenticated, async (req, res) => {
       return res.status(404).json({ error: 'Книга не найдена' });
     }
     
-    const vk = new VKIntegration(req.session.user.accessToken);
+    const vk = new VKIntegration(req.user.accessToken);
     const result = await vk.shareBook(book.title, book.author, review);
     
     res.json({ 
@@ -38,7 +38,7 @@ router.post('/api/share/book/:id', isAuthenticated, async (req, res) => {
 router.post('/api/share/review/:id', isAuthenticated, async (req, res) => {
   try {
     const bookId = parseInt(req.params.id);
-    const userId = req.session.user.id;
+    const userId = req.user.id;
     
     // Получаем отзыв пользователя
     const { reviews, books } = require('./books');
@@ -55,7 +55,7 @@ router.post('/api/share/review/:id', isAuthenticated, async (req, res) => {
       return res.status(404).json({ error: 'Книга не найдена' });
     }
     
-    const vk = new VKIntegration(req.session.user.accessToken);
+    const vk = new VKIntegration(req.user.accessToken);
     const result = await vk.shareReview(book.title, userReview.rating, userReview.review);
     
     res.json({ 
@@ -75,7 +75,7 @@ router.post('/api/share/review/:id', isAuthenticated, async (req, res) => {
 // Получить информацию о пользователе ВК
 router.get('/api/vk/user', isAuthenticated, async (req, res) => {
   try {
-    const vk = new VKIntegration(req.session.user.accessToken);
+    const vk = new VKIntegration(req.user.accessToken);
     const userInfo = await vk.getUserInfo();
     
     res.json({ 
@@ -94,7 +94,7 @@ router.get('/api/vk/user', isAuthenticated, async (req, res) => {
 // Получить друзей пользователя ВК
 router.get('/api/vk/friends', isAuthenticated, async (req, res) => {
   try {
-    const vk = new VKIntegration(req.session.user.accessToken);
+    const vk = new VKIntegration(req.user.accessToken);
     const friends = await vk.getFriends();
     
     res.json({ 

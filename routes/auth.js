@@ -47,12 +47,18 @@ router.get('/auth/vk', (req, res) => {
 router.get('/auth/vk/callback', async (req, res) => {
   const { code, state } = req.query;
   
+  console.log('Callback получен:', { code: code?.substring(0, 20) + '...', state });
+  console.log('Сессия state:', req.session.state);
+  
   // Проверяем state
   if (state !== req.session.state) {
+    console.error('State не совпадает:', { received: state, expected: req.session.state });
     return res.redirect('/login?error=invalid_state');
   }
   
   try {
+    console.log('Обмениваем код на токен...');
+    
     // Обмениваем код на токен
     const tokenResponse = await fetch('https://id.vk.ru/oauth2/auth', {
       method: 'POST',
@@ -70,11 +76,15 @@ router.get('/auth/vk/callback', async (req, res) => {
     });
     
     const tokenData = await tokenResponse.json();
+    console.log('Ответ токена:', tokenData);
     
     if (tokenData.access_token) {
+      console.log('Получаем информацию о пользователе...');
+      
       // Получаем информацию о пользователе
       const userResponse = await fetch(`https://api.vk.com/method/users.get?access_token=${tokenData.access_token}&v=5.131&fields=photo_200`);
       const userData = await userResponse.json();
+      console.log('Данные пользователя:', userData);
       
       const user = {
         id: userData.response[0].id,
@@ -85,8 +95,18 @@ router.get('/auth/vk/callback', async (req, res) => {
         refreshToken: tokenData.refresh_token
       };
       
+      console.log('Сохраняем пользователя в сессию:', user);
       req.session.user = user;
-      res.redirect('/dashboard');
+      
+      // Принудительно сохраняем сессию
+      req.session.save((err) => {
+        if (err) {
+          console.error('Ошибка сохранения сессии:', err);
+        } else {
+          console.log('Сессия сохранена успешно');
+        }
+        res.redirect('/dashboard');
+      });
     } else {
       console.error('Ошибка получения токена:', tokenData);
       res.redirect('/login?error=token_exchange_failed');

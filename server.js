@@ -11,7 +11,11 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'default_secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false }
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production', // true для HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 часа
+  }
 }));
 
 // Middleware для парсинга данных
@@ -27,6 +31,11 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware для передачи данных пользователя в шаблоны
 app.use((req, res, next) => {
+  console.log('Проверка сессии:', { 
+    hasSession: !!req.session, 
+    hasUser: !!req.session?.user,
+    userId: req.session?.user?.id 
+  });
   res.locals.user = req.session.user;
   next();
 });

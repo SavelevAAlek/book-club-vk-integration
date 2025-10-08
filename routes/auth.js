@@ -53,21 +53,42 @@ router.get('/auth/vk', (req, res) => {
 
 // Callback обработка
 router.get('/auth/vk/callback', async (req, res) => {
-  const { payload } = req.query;
-  
-  console.log('Callback получен с payload:', payload);
-  
-  if (!payload) {
-    console.error('Payload отсутствует в запросе');
-    return res.redirect('/login?error=no_payload');
-  }
-  
+  // Поддерживаем оба варианта ответа VK ID: payload ИЛИ отдельные параметры
+  let code;
+  let state;
+  let device_id;
+
   try {
-    // Парсим payload (он приходит как строка)
-    const authData = JSON.parse(decodeURIComponent(payload));
-    console.log('Данные авторизации:', authData);
-    
-    const { code, state, device_id } = authData;
+    const { payload } = req.query;
+    console.log('Callback получен. payload:', payload, 'code:', req.query.code, 'state:', req.query.state, 'device_id:', req.query.device_id);
+
+    if (payload) {
+      // payload может быть как закодированным JSON, так и обычной строкой JSON
+      let parsed;
+      try {
+        parsed = JSON.parse(payload);
+      } catch (_) {
+        try {
+          parsed = JSON.parse(decodeURIComponent(payload));
+        } catch (e) {
+          console.error('Не удалось распарсить payload:', e);
+          return res.redirect('/login?error=bad_payload');
+        }
+      }
+      console.log('Распарсенный payload:', parsed);
+      code = parsed.code;
+      state = parsed.state;
+      device_id = parsed.device_id;
+    } else {
+      // Вариант, когда VK ID возвращает code/state/device_id напрямую в query
+      code = req.query.code;
+      state = req.query.state;
+      device_id = req.query.device_id || req.query.deviceId || req.query.device;
+      if (!code || !state) {
+        console.error('Отсутствуют обязательные параметры code/state');
+        return res.redirect('/login?error=no_payload');
+      }
+    }
     
     // Проверяем state
     if (state !== req.cookies.state) {

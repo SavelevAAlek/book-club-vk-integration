@@ -6,7 +6,7 @@ passport.use(new VKontakteStrategy({
   clientID: process.env.VK_APP_ID,
   clientSecret: process.env.VK_APP_SECRET,
   callbackURL: process.env.VK_CALLBACK_URL || "http://localhost:3000/auth/vk/callback",
-  scope: ['email', 'photos']
+  scope: ['email', 'photos', 'wall', 'friends']
 }, (accessToken, refreshToken, params, profile, done) => {
   // Здесь обычно происходит сохранение пользователя в БД
   // Пока используем простую структуру в памяти

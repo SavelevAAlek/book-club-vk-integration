@@ -10,7 +10,7 @@ router.get('/login', (req, res) => {
 // Авторизация через ВКонтакте
 router.get('/auth/vk', 
   passport.authenticate('vkontakte', {
-    scope: ['email', 'photos']
+    scope: ['email', 'photos', 'wall', 'friends']
   })
 );
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
 
@@ -18,6 +19,9 @@ app.use(session({
   }
 }));
 
+// Middleware для парсинга cookies
+app.use(cookieParser());
+
 // Middleware для парсинга данных
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,6 +35,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware для передачи данных пользователя в шаблоны
 app.use((req, res, next) => {
+  console.log('Cookies:', req.cookies);
+  
   const token = req.cookies.authToken;
   
   if (token) {
@@ -39,7 +45,12 @@ app.use((req, res, next) => {
     if (user) {
       req.user = user;
       res.locals.user = user;
+      console.log('Пользователь авторизован:', user.username);
+    } else {
+      console.log('Недействительный токен');
     }
+  } else {
+    console.log('Токен отсутствует');
   }
   
   next();

@@ -4,73 +4,10 @@ const VKIntegration = require('../modules/vkIntegration');
 const router = express.Router();
 
 // Поделиться книгой в ВК
-router.post('/api/share/book/:id', isAuthenticated, async (req, res) => {
-  try {
-    const bookId = parseInt(req.params.id);
-    const { review } = req.body;
-    
-    // Находим книгу (в реальном проекте из БД)
-    const { books } = require('./books');
-    const book = books.find(b => b.id === bookId);
-    
-    if (!book) {
-      return res.status(404).json({ error: 'Книга не найдена' });
-    }
-    
-    const vk = new VKIntegration(req.user.accessToken);
-    const result = await vk.shareBook(book.title, book.author, review);
-    
-    res.json({ 
-      success: true, 
-      message: 'Книга успешно опубликована в ВКонтакте!',
-      postId: result.response.post_id 
-    });
-  } catch (error) {
-    console.error('Ошибка при публикации в ВК:', error);
-    res.status(500).json({ 
-      error: 'Ошибка при публикации в ВКонтакте',
-      details: error.message 
-    });
-  }
-});
+// Эндпоинты публикации в ВК удалены
 
 // Поделиться отзывом в ВК
-router.post('/api/share/review/:id', isAuthenticated, async (req, res) => {
-  try {
-    const bookId = parseInt(req.params.id);
-    const userId = req.user.id;
-    
-    // Получаем отзыв пользователя
-    const { reviews, books } = require('./books');
-    const userReview = reviews[userId] && reviews[userId][bookId];
-    
-    if (!userReview) {
-      return res.status(404).json({ error: 'Отзыв не найден' });
-    }
-    
-    // Находим книгу
-    const book = books.find(b => b.id === bookId);
-    
-    if (!book) {
-      return res.status(404).json({ error: 'Книга не найдена' });
-    }
-    
-    const vk = new VKIntegration(req.user.accessToken);
-    const result = await vk.shareReview(book.title, userReview.rating, userReview.review);
-    
-    res.json({ 
-      success: true, 
-      message: 'Отзыв успешно опубликован в ВКонтакте!',
-      postId: result.response.post_id 
-    });
-  } catch (error) {
-    console.error('Ошибка при публикации отзыва в ВК:', error);
-    res.status(500).json({ 
-      error: 'Ошибка при публикации в ВКонтакте',
-      details: error.message 
-    });
-  }
-});
+// Эндпоинты публикации в ВК удалены
 
 // Получить информацию о пользователе ВК
 router.get('/api/vk/user', isAuthenticated, async (req, res) => {

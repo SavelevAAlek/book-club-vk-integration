@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Книжный клуб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/">
+                    <i class="fas fa-book"></i>
+                    Книжный клуб
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/books" class="nav-link">Каталог</a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="nav-link">Мой профиль</a>
+                    <div class="user-menu">
+                        <img src="<%= user.photo %>" alt="<%= user.username %>" class="user-avatar">
+                        <span class="user-name"><%= user.username %></span>
+                        <a href="/logout" class="nav-link logout">Выйти</a>
+                    </div>
+                <% } else { %>
+                    <a href="/login" class="nav-link login-btn">Войти через ВК</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="book-page">
+                <div class="book-header">
+                    <div class="book-cover big"><i class="fas fa-book"></i></div>
+                    <div class="book-meta">
+                        <h1><%= book.title %></h1>
+                        <p class="book-author"><i class="fas fa-user"></i> <%= book.author %></p>
+                        <p class="book-genre"><i class="fas fa-tag"></i> <%= book.genre %></p>
+                        <p class="book-year"><i class="fas fa-calendar"></i> <%= book.year %></p>
+                        <p class="book-description"><%= book.description %></p>
+                    </div>
+                </div>
+
+                <div class="discussion">
+                    <h2><i class="fas fa-comments"></i> Обсуждение</h2>
+                    
+                    <% if (comments.length > 0) { %>
+                        <div class="comments-list">
+                            <% comments.forEach(c => { %>
+                                <div class="comment">
+                                    <div class="comment-avatar"><i class="fas fa-user"></i></div>
+                                    <div class="comment-body">
+                                        <div class="comment-header">
+                                            <span class="comment-author"><%= c.username %></span>
+                                            <span class="comment-date"><script>document.write(new Date('<%= c.date %>').toLocaleString('ru-RU'))</script></span>
+                                        </div>
+                                        <p class="comment-text"><%= c.text %></p>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    <% } else { %>
+                        <div class="empty-state">
+                            <i class="fas fa-comments"></i>
+                            <h3>Пока нет комментариев</h3>
+                            <p>Будьте первым, кто начнет обсуждение!</p>
+                        </div>
+                    <% } %>
+
+                    <div class="comment-form">
+                        <% if (user) { %>
+                            <form method="POST" action="/books/<%= book.id %>/comments">
+                                <div class="form-group">
+                                    <label for="commentText">Ваш комментарий</label>
+                                    <textarea id="commentText" name="text" rows="3" required placeholder="Напишите, что вы думаете о книге..."></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Отправить</button>
+                                </div>
+                            </form>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Войдите, чтобы комментировать</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Книжный клуб. Курсовой проект по интеграции с социальными сетями.</p>
+            <p>Разработано с использованием Node.js, Express и VK API</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
+
+

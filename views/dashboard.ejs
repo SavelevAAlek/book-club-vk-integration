@@ -87,14 +87,14 @@
                                             <p class="book-genre"><%= book.genre %></p>
                                         </div>
                                         <div class="book-actions">
-                                            <a href="/books/<%= book.id %>/review" class="btn btn-sm">
+                                            <a href="/books/<%= book.id %>" class="btn btn-sm">
                                                 <i class="fas fa-star"></i>
-                                                Отзыв
+                                                Обсуждение
                                             </a>
-                                            <button class="btn btn-sm share-btn" data-book-id="<%= book.id %>">
-                                                <i class="fab fa-vk"></i>
-                                                Поделиться
-                                            </button>
+                                            <a href="/books/<%= book.id %>/review" class="btn btn-sm">
+                                                <i class="fas fa-pen"></i>
+                                                Написать отзыв
+                                            </a>
                                         </div>
                                     </div>
                                 <% }) %>
@@ -130,12 +130,7 @@
                                                 </div>
                                             </div>
                                             <p class="review-text"><%= review.review %></p>
-                                            <div class="review-actions">
-                                                <button class="btn btn-sm share-review-btn" data-book-id="<%= bookId %>">
-                                                    <i class="fab fa-vk"></i>
-                                                    Поделиться отзывом
-                                                </button>
-                                            </div>
+                                            <div class="review-actions"></div>
                                         </div>
                                     <% } %>
                                 <% }) %>
@@ -152,27 +147,7 @@
             </div>
         </div>
 
-        <!-- Модальное окно для поделиться книгой -->
-        <div id="shareModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Поделиться книгой в ВКонтакте</h3>
-                    <span class="close">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <form id="shareForm">
-                        <div class="form-group">
-                            <label for="shareReview">Добавить комментарий (необязательно):</label>
-                            <textarea id="shareReview" name="review" rows="4" placeholder="Поделитесь своими впечатлениями о книге..."></textarea>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" id="cancelShare">Отмена</button>
-                            <button type="submit" class="btn btn-primary">Поделиться</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <!-- Блок поделиться удален -->
     </main>
 
     <footer class="footer">

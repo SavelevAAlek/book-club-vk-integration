@@ -54,6 +54,10 @@
                             <p class="book-description"><%= book.description %></p>
                         </div>
                         <div class="book-actions">
+                            <a href="/books/<%= book.id %>" class="btn btn-secondary">
+                                <i class="fas fa-comments"></i>
+                                Обсуждение
+                            </a>
                             <% if (user) { %>
                                 <form method="POST" action="/books/<%= book.id %>/add" style="display: inline;">
                                     <button type="submit" class="btn btn-primary">

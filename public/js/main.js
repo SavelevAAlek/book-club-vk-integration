@@ -6,84 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация рейтинга
     initRating();
     
-    // Инициализация кнопок поделиться
-    initShareButtons();
+    // Убрали функционал шаринга во ВК
 });
 
-// Модальное окно для поделиться
-function initModal() {
-    const modal = document.getElementById('shareModal');
-    const shareBtns = document.querySelectorAll('.share-btn, .share-review-btn');
-    const closeBtn = document.querySelector('.close');
-    const cancelBtn = document.getElementById('cancelShare');
-    const shareForm = document.getElementById('shareForm');
-    
-    if (!modal) return;
-    
-    // Открытие модального окна
-    shareBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const bookId = this.dataset.bookId;
-            const isReview = this.classList.contains('share-review-btn');
-            
-            // Устанавливаем правильный endpoint
-            shareForm.action = isReview ? 
-                `/api/share/review/${bookId}` : 
-                `/api/share/book/${bookId}`;
-            
-            // Обновляем заголовок
-            const title = modal.querySelector('h3');
-            title.textContent = isReview ? 
-                'Поделиться отзывом в ВКонтакте' : 
-                'Поделиться книгой в ВКонтакте';
-            
-            modal.style.display = 'block';
-        });
-    });
-    
-    // Закрытие модального окна
-    function closeModal() {
-        modal.style.display = 'none';
-        shareForm.reset();
-    }
-    
-    closeBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
-    
-    // Закрытие при клике вне модального окна
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-    
-    // Отправка формы
-    shareForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const url = this.action;
-        
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData
-            });
-            
-            const result = await response.json();
-            
-            if (result.success) {
-                showNotification(result.message, 'success');
-                closeModal();
-            } else {
-                showNotification(result.error || 'Ошибка при публикации', 'error');
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-            showNotification('Ошибка при публикации в ВКонтакте', 'error');
-        }
-    });
-}
+// Модальное окно шаринга удалено
+function initModal() {}
 
 // Инициализация рейтинга
 function initRating() {
@@ -135,10 +62,7 @@ function clearStars(stars) {
     });
 }
 
-// Инициализация кнопок поделиться
-function initShareButtons() {
-    // Кнопки уже инициализированы в initModal()
-}
+// Убрано
 
 // Показ уведомлений
 function showNotification(message, type = 'info') {

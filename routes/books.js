@@ -33,6 +33,8 @@ const books = [
 
 const userBooks = {}; // userBooks[userId] = [bookId1, bookId2, ...]
 const reviews = {}; // reviews[userId] = { bookId: { rating, review, date } }
+// Комментарии к книгам: bookComments[bookId] = [{ userId, username, text, date }]
+const bookComments = {};
 
 // Дашборд пользователя
 router.get('/dashboard', isAuthenticated, (req, res) => {
@@ -57,6 +59,51 @@ router.get('/books', (req, res) => {
     books: books,
     user: req.user
   });
+});
+
+// Страница книги с обсуждением
+router.get('/books/:id', (req, res) => {
+  const bookId = parseInt(req.params.id);
+  const book = books.find(b => b.id === bookId);
+  if (!book) {
+    return res.status(404).render('error', {
+      error: 'Книга не найдена',
+      message: 'Запрашиваемая книга не существует'
+    });
+  }
+
+  const comments = bookComments[bookId] || [];
+  res.render('book', {
+    title: book.title,
+    book,
+    comments,
+    user: req.user
+  });
+});
+
+// Добавить комментарий к книге
+router.post('/books/:id/comments', isAuthenticated, (req, res) => {
+  const bookId = parseInt(req.params.id);
+  const book = books.find(b => b.id === bookId);
+  if (!book) {
+    return res.status(404).render('error', {
+      error: 'Книга не найдена',
+      message: 'Запрашиваемая книга не существует'
+    });
+  }
+
+  const { text } = req.body;
+  if (!text || !text.trim()) {
+    return res.redirect(`/books/${bookId}`);
+  }
+  if (!bookComments[bookId]) bookComments[bookId] = [];
+  bookComments[bookId].push({
+    userId: req.user.id,
+    username: req.user.username,
+    text: text.trim(),
+    date: new Date().toISOString()
+  });
+  res.redirect(`/books/${bookId}`);
 });
 
 // Добавить книгу в прочитанные

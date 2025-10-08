@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-const passport = require('passport');
 const path = require('path');
 require('dotenv').config();
 
@@ -15,13 +14,6 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-// Инициализация Passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Подключение модуля авторизации ВК
-require('./config/passport');
-
 // Middleware для парсинга данных
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -35,7 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware для передачи данных пользователя в шаблоны
 app.use((req, res, next) => {
-  res.locals.user = req.user;
+  res.locals.user = req.session.user;
   next();
 });
 
@@ -48,7 +40,7 @@ app.use('/', require('./routes/api'));
 app.get('/', (req, res) => {
   res.render('index', { 
     title: 'Книжный клуб',
-    user: req.user 
+    user: req.session.user 
   });
 });
 

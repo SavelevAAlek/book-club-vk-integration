@@ -53,21 +53,31 @@ router.get('/auth/vk', (req, res) => {
 
 // Callback обработка
 router.get('/auth/vk/callback', async (req, res) => {
-  const { code, state } = req.query;
+  const { payload } = req.query;
   
-  console.log('Callback получен:', { code: code?.substring(0, 20) + '...', state });
-  console.log('Cookie state:', req.cookies.state);
+  console.log('Callback получен с payload:', payload);
   
-  // Проверяем state
-  if (state !== req.cookies.state) {
-    console.error('State не совпадает:', { received: state, expected: req.cookies.state });
-    return res.redirect('/login?error=invalid_state');
+  if (!payload) {
+    console.error('Payload отсутствует в запросе');
+    return res.redirect('/login?error=no_payload');
   }
   
   try {
+    // Парсим payload (он приходит как строка)
+    const authData = JSON.parse(decodeURIComponent(payload));
+    console.log('Данные авторизации:', authData);
+    
+    const { code, state, device_id } = authData;
+    
+    // Проверяем state
+    if (state !== req.cookies.state) {
+      console.error('State не совпадает:', { received: state, expected: req.cookies.state });
+      return res.redirect('/login?error=invalid_state');
+    }
+    
     console.log('Обмениваем код на токен...');
     
-    // Обмениваем код на токен
+    // Обмениваем код на токен согласно документации
     const tokenResponse = await fetch('https://id.vk.ru/oauth2/auth', {
       method: 'POST',
       headers: {
@@ -78,6 +88,7 @@ router.get('/auth/vk/callback', async (req, res) => {
         code: code,
         code_verifier: req.cookies.codeVerifier,
         client_id: process.env.VK_APP_ID,
+        device_id: device_id,
         redirect_uri: process.env.VK_CALLBACK_URL,
         state: state
       })
@@ -89,18 +100,29 @@ router.get('/auth/vk/callback', async (req, res) => {
     if (tokenData.access_token) {
       console.log('Получаем информацию о пользователе...');
       
-      // Получаем информацию о пользователе
-      const userResponse = await fetch(`https://api.vk.com/method/users.get?access_token=${tokenData.access_token}&v=5.131&fields=photo_200`);
+      // Получаем информацию о пользователе согласно документации
+      const userResponse = await fetch('https://id.vk.ru/oauth2/user_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          access_token: tokenData.access_token,
+          client_id: process.env.VK_APP_ID
+        })
+      });
+      
       const userData = await userResponse.json();
       console.log('Данные пользователя:', userData);
       
       const user = {
-        id: userData.response[0].id,
-        username: `${userData.response[0].first_name} ${userData.response[0].last_name}`,
-        email: tokenData.email || '',
-        photo: userData.response[0].photo_200 || '',
+        id: userData.user.user_id,
+        username: `${userData.user.first_name} ${userData.user.last_name}`,
+        email: userData.user.email || '',
+        photo: userData.user.avatar || '',
         accessToken: tokenData.access_token,
-        refreshToken: tokenData.refresh_token
+        refreshToken: tokenData.refresh_token,
+        deviceId: device_id
       };
       
       console.log('Создаем JWT токен для пользователя:', user);

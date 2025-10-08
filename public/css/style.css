@@ -277,26 +277,6 @@ body {
     background: #3d5f8a;
 }
 
-.login-benefits h3 {
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.login-benefits ul {
-    list-style: none;
-}
-
-.login-benefits li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    color: #666;
-}
-
-.login-benefits i {
-    color: #28a745;
-}
 
 /* Дашборд */
 .dashboard-container {

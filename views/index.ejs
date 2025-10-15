@@ -37,8 +37,13 @@
 
 <div class="hero-section">
     <div class="hero-content">
-        <h1 class="hero-title">Добро пожаловать в Книжный клуб</h1>
-        <p class="hero-subtitle">Отслеживайте прочитанные книги, делитесь отзывами и находите новые произведения</p>
+        <% if (user) { %>
+            <h1 class="hero-title">Добро пожаловать, <%= user.username %>!</h1>
+            <p class="hero-subtitle">Теперь вы можете добавлять книги в свою библиотеку и делиться отзывами с друзьями.</p>
+        <% } else { %>
+            <h1 class="hero-title">Добро пожаловать в Книжный клуб</h1>
+            <p class="hero-subtitle">Отслеживайте прочитанные книги, делитесь отзывами и находите новые произведения</p>
+        <% } %>
         
         <% if (!user) { %>
             <div class="hero-actions">
@@ -102,14 +107,6 @@
     </div>
 </div>
 
-<% if (user) { %>
-<div class="recent-section">
-    <div class="container">
-        <h2 class="section-title">Добро пожаловать, <%= user.username %>!</h2>
-        <p>Теперь вы можете добавлять книги в свою библиотеку и делиться отзывами с друзьями.</p>
-    </div>
-</div>
-<% } %>
 
     </main>
 

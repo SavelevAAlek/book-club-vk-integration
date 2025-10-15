@@ -1,4 +1,4 @@
-/* Основные стили */
+/* Упрощенные стили */
 * {
     margin: 0;
     padding: 0;
@@ -6,124 +6,109 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
     color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
+    background: #f5f5f5;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
 /* Навигация */
 .navbar {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
 }
 
 .nav-brand a {
     text-decoration: none;
-    color: #667eea;
-    font-size: 1.5rem;
+    color: #333;
+    font-size: 1.2rem;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 }
 
 .nav-link {
     text-decoration: none;
     color: #333;
-    font-weight: 500;
-    transition: color 0.3s ease;
+    padding: 8px 12px;
 }
 
 .nav-link:hover {
-    color: #667eea;
+    color: #666;
 }
 
 .user-menu {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .user-avatar {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    border: 2px solid #667eea;
 }
 
 .user-name {
-    font-weight: 500;
+    font-weight: normal;
     color: #333;
 }
 
 .login-btn {
-    background: #667eea;
+    background: #007bff;
     color: white !important;
-    padding: 10px 20px;
-    border-radius: 25px;
-    transition: background 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 4px;
 }
 
 .login-btn:hover {
-    background: #5a6fd8;
+    background: #0056b3;
 }
 
 /* Основной контент */
 .main-content {
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 200px);
 }
 
 /* Кнопки */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
+    display: inline-block;
+    padding: 10px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     text-decoration: none;
-    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
     font-size: 14px;
+    text-align: center;
 }
 
 .btn-primary {
-    background: #667eea;
+    background: #007bff;
     color: white;
 }
 
 .btn-primary:hover {
-    background: #5a6fd8;
-    transform: translateY(-2px);
+    background: #0056b3;
 }
 
 .btn-secondary {
@@ -132,8 +117,7 @@ body {
 }
 
 .btn-secondary:hover {
-    background: #5a6268;
-    transform: translateY(-2px);
+    background: #545b62;
 }
 
 .btn-large {
@@ -142,39 +126,39 @@ body {
 }
 
 .btn-sm {
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-size: 12px;
 }
 
 /* Главная страница */
 .hero-section {
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
-    color: white;
-    padding: 100px 0;
+    background: white;
+    padding: 60px 0;
     text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
-    font-weight: 700;
+    color: #333;
 }
 
 .hero-subtitle {
-    font-size: 1.3rem;
-    margin-bottom: 40px;
-    opacity: 0.9;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    color: #666;
 }
 
 .hero-actions {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -182,50 +166,45 @@ body {
 /* Секции */
 .features-section {
     background: white;
-    padding: 80px 0;
+    padding: 60px 0;
 }
 
 .section-title {
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 50px;
+    font-size: 2rem;
+    margin-bottom: 40px;
     color: #333;
 }
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
 }
 
 .feature-card {
     text-align: center;
-    padding: 40px 20px;
-    border-radius: 15px;
-    background: #f8f9fa;
-    transition: transform 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
+    padding: 30px 20px;
+    border: 1px solid #ddd;
+    background: white;
 }
 
 .feature-icon {
-    font-size: 3rem;
-    color: #667eea;
-    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 15px;
 }
 
 .feature-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
     color: #333;
 }
 
 .feature-card p {
     color: #666;
-    line-height: 1.6;
+    font-size: 0.9rem;
 }
 
 /* Страница входа */
@@ -233,27 +212,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 200px);
     padding: 40px 20px;
 }
 
 .login-card {
     background: white;
-    border-radius: 20px;
-    padding: 50px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    border: 1px solid #ddd;
+    padding: 40px;
+    max-width: 400px;
     width: 100%;
 }
 
 .login-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .login-header h1 {
-    color: #667eea;
-    font-size: 2rem;
+    color: #333;
+    font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
@@ -261,64 +239,60 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
     background: #4c75a3;
     color: white;
     text-decoration: none;
-    padding: 15px 30px;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: background 0.3s ease;
-    margin-bottom: 30px;
+    padding: 15px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
 }
 
 .vk-login-btn:hover {
     background: #3d5f8a;
 }
 
-
 /* Дашборд */
 .dashboard-container {
     background: white;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 200px);
     padding: 40px 0;
 }
 
 .dashboard-header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: #007bff;
     color: white;
-    padding: 60px 0;
-    margin-bottom: 40px;
+    padding: 40px 0;
+    margin-bottom: 30px;
 }
 
 .user-info {
     display: flex;
     align-items: center;
-    gap: 30px;
-    max-width: 1200px;
+    gap: 20px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
 .user-avatar-large {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    border: 4px solid white;
+    border: 3px solid white;
 }
 
 .user-details h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 2rem;
+    margin-bottom: 5px;
 }
 
 .dashboard-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    margin-bottom: 50px;
-    max-width: 1200px;
+    gap: 20px;
+    margin-bottom: 40px;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 20px;
@@ -326,81 +300,76 @@ body {
 
 .stat-card {
     background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    padding: 20px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .stat-icon {
-    font-size: 2.5rem;
-    color: #667eea;
+    font-size: 2rem;
+    color: #007bff;
 }
 
 .stat-info h3 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #333;
     margin-bottom: 5px;
 }
 
 .stat-info p {
     color: #666;
+    font-size: 0.9rem;
 }
 
 .dashboard-sections {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
 .section {
     background: white;
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #f8f9fa;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
 }
 
 .section-header h2 {
     color: #333;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
 }
 
 .book-card {
     background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    transition: transform 0.3s ease;
-}
-
-.book-card:hover {
-    transform: translateY(-5px);
+    border: 1px solid #ddd;
+    padding: 15px;
 }
 
 .book-info h3 {
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
 }
 
 .book-author {
-    color: #667eea;
+    color: #007bff;
     font-weight: 500;
     margin-bottom: 5px;
 }
@@ -413,20 +382,20 @@ body {
 
 .book-actions {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 8px;
+    margin-top: 10px;
 }
 
 .empty-state {
     text-align: center;
-    padding: 60px 20px;
+    padding: 40px 20px;
     color: #666;
 }
 
 .empty-state i {
-    font-size: 4rem;
-    color: #ddd;
-    margin-bottom: 20px;
+    font-size: 3rem;
+    color: #ccc;
+    margin-bottom: 15px;
 }
 
 .empty-state h3 {
@@ -438,20 +407,20 @@ body {
 .reviews-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .review-card {
     background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
 }
 
 .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .review-header h3 {
@@ -460,12 +429,12 @@ body {
 
 .rating {
     display: flex;
-    gap: 5px;
+    gap: 3px;
 }
 
 .rating i {
     color: #ddd;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .rating i.active {
@@ -474,52 +443,51 @@ body {
 
 .review-text {
     color: #666;
-    line-height: 1.6;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 /* Каталог книг */
 .books-container {
     background: white;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 200px);
     padding: 40px 0;
 }
 
 .books-header {
     text-align: center;
-    margin-bottom: 50px;
-    max-width: 1200px;
+    margin-bottom: 40px;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 20px;
 }
 
 .books-header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #333;
     margin-bottom: 10px;
 }
 
 .book-cover {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .book-cover i {
-    font-size: 4rem;
-    color: #667eea;
+    font-size: 3rem;
+    color: #007bff;
 }
 
 .book-description {
     color: #666;
     font-size: 0.9rem;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 /* Форма отзыва */
 .review-container {
     background: white;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 200px);
     padding: 40px 0;
     display: flex;
     justify-content: center;
@@ -528,44 +496,43 @@ body {
 
 .review-card {
     background: white;
-    border-radius: 20px;
-    padding: 50px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+    border: 1px solid #ddd;
+    padding: 40px;
+    max-width: 500px;
     width: 100%;
 }
 
 .review-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .review-header h1 {
-    color: #667eea;
-    font-size: 2rem;
-    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
 .book-info h2 {
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .book-author {
-    color: #667eea;
+    color: #007bff;
     font-weight: 500;
 }
 
 .review-form {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .form-group label {
@@ -575,7 +542,7 @@ body {
 
 .rating-input {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
 }
 
@@ -584,10 +551,9 @@ body {
 }
 
 .star-label {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #ddd;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
 .rating-input input[type="radio"]:checked ~ .star-label,
@@ -600,23 +566,22 @@ body {
 }
 
 textarea {
-    padding: 15px;
-    border: 2px solid #e9ecef;
-    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-family: inherit;
     font-size: 1rem;
     resize: vertical;
-    transition: border-color 0.3s ease;
 }
 
 textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #007bff;
 }
 
 .form-actions {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
 }
 
@@ -624,31 +589,29 @@ textarea:focus {
 .modal {
     display: none;
     position: fixed;
-    z-index: 2000;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
 }
 
 .modal-content {
     background-color: white;
     margin: 10% auto;
     padding: 0;
-    border-radius: 15px;
+    border: 1px solid #ddd;
     width: 90%;
-    max-width: 500px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 30px;
-    border-bottom: 1px solid #e9ecef;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
 }
 
 .modal-header h3 {
@@ -657,11 +620,10 @@ textarea:focus {
 }
 
 .close {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
     color: #999;
-    transition: color 0.3s ease;
 }
 
 .close:hover {
@@ -669,7 +631,7 @@ textarea:focus {
 }
 
 .modal-body {
-    padding: 30px;
+    padding: 20px;
 }
 
 /* Страница ошибки */
@@ -677,36 +639,34 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 200px);
     padding: 40px 20px;
 }
 
 .error-content {
     text-align: center;
     background: white;
-    border-radius: 20px;
-    padding: 60px 40px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    border: 1px solid #ddd;
+    padding: 40px;
+    max-width: 400px;
     width: 100%;
 }
 
 .error-icon {
-    font-size: 4rem;
+    font-size: 3rem;
     color: #dc3545;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .error-content h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .error-content p {
     color: #666;
-    margin-bottom: 30px;
-    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 /* Футер */
@@ -714,30 +674,28 @@ textarea:focus {
     background: #333;
     color: white;
     text-align: center;
-    padding: 30px 0;
+    padding: 20px 0;
 }
 
 .footer-content p {
-    margin-bottom: 10px;
-    opacity: 0.8;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
-        height: auto;
-        padding: 20px;
+        gap: 15px;
     }
     
     .nav-menu {
-        margin-top: 20px;
         flex-wrap: wrap;
         justify-content: center;
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .hero-actions {
@@ -756,7 +714,7 @@ textarea:focus {
     
     .section-header {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
         text-align: center;
     }
     
